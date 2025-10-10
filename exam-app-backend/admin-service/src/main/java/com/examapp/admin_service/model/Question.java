@@ -1,4 +1,4 @@
-package com.examapp.exam_service.model;
+package com.examapp.admin_service.model;
 
 import jakarta.persistence.*;
 

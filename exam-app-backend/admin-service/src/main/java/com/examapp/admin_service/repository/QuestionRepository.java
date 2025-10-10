@@ -1,10 +1,12 @@
-package com.examapp.exam_service.repository;
+package com.examapp.admin_service.repository;
 
-import com.examapp.exam_service.model.Question;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
+
+import com.examapp.admin_service.model.Question;
 
 @Repository
 public interface QuestionRepository extends JpaRepository<Question, Long> {
