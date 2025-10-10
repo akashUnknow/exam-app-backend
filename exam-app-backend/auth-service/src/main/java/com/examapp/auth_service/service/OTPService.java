@@ -1,14 +1,12 @@
 package com.examapp.auth_service.service;
 
+import com.examapp.auth_service.model.OTPToken;
+import com.examapp.auth_service.repository.OTPRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.examapp.auth_service.model.OTPToken;
-import com.examapp.auth_service.repository.OTPRepository;
 
 @Service
 public class OTPService {

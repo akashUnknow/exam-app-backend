@@ -1,15 +1,12 @@
 package com.examapp.auth_service.service;
 
+import com.examapp.auth_service.model.User;
+import com.examapp.auth_service.repository.UserRepository;
+import com.examapp.auth_service.dto.*;
+import com.examapp.auth_service.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import com.examapp.auth_service.dto.AuthResponse;
-import com.examapp.auth_service.dto.LoginRequest;
-import com.examapp.auth_service.dto.RegisterRequest;
-import com.examapp.auth_service.model.User;
-import com.examapp.auth_service.repository.UserRepository;
-import com.examapp.auth_service.util.JwtUtil;
 
 @Service
 public class AuthService {

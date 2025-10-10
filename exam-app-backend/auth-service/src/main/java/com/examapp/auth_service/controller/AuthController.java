@@ -1,18 +1,10 @@
 package com.examapp.auth_service.controller;
 
+import com.examapp.auth_service.dto.*;
+import com.examapp.auth_service.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.examapp.auth_service.dto.AuthResponse;
-import com.examapp.auth_service.dto.LoginRequest;
-import com.examapp.auth_service.dto.OTPRequest;
-import com.examapp.auth_service.dto.RegisterRequest;
-import com.examapp.auth_service.service.AuthService;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
