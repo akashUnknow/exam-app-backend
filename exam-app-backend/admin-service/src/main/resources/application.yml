@@ -5,10 +5,10 @@ spring:
   application:
     name: admin-service
   datasource:
-    url: jdbc:mysql://localhost:3306/exam_questions_db
-    username: root
-    password: root
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:postgresql://localhost:5432/exam_questions_db
+    username: postgres
+    password: 2486
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
