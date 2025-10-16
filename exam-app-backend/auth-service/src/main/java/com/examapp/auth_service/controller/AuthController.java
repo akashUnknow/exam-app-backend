@@ -25,13 +25,14 @@ public class AuthController {
     }
     
     @PostMapping("/send-otp")
-    public ResponseEntity<String> sendOTP(@RequestBody OTPRequest request) {
-        authService.sendOTP(request.getPhoneNumber());
-        return ResponseEntity.ok("OTP sent successfully");
+    public ResponseEntity<String> sendOTP(@RequestParam String email) {
+        authService.sendOTP(email);
+        return ResponseEntity.ok("OTP sent successfully to " + email);
     }
     
     @PostMapping("/verify-otp")
-    public ResponseEntity<AuthResponse> verifyOTP(@RequestBody OTPRequest request) {
-        return ResponseEntity.ok(authService.verifyOTP(request.getPhoneNumber(), request.getOtp()));
+    public ResponseEntity<AuthResponse> verifyOTP(@RequestParam String email, @RequestParam String otp) {
+        AuthResponse response = authService.verifyOTP(email, otp);
+        return ResponseEntity.ok(response);
     }
 }

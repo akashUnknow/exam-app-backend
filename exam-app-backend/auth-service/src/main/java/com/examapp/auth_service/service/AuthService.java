@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
+
     
     @Autowired
     private UserRepository userRepository;
@@ -53,29 +54,30 @@ public class AuthService {
                               user.getEmail(), user.getRole());
     }
     
-    public void sendOTP(String phoneNumber) {
-        otpService.sendOTP(phoneNumber);
+    public void sendOTP(String email) {
+        otpService.sendOTP(email);
     }
-    
-    public AuthResponse verifyOTP(String phoneNumber, String otp) {
-        if (!otpService.verifyOTP(phoneNumber, otp)) {
+
+    //verify OTP
+    public AuthResponse verifyOTP(String email, String otp) {
+        if (!otpService.verifyOTP(email, otp)) {
             throw new RuntimeException("Invalid or expired OTP");
         }
-        
-        User user = userRepository.findByPhoneNumber(phoneNumber)
+
+        User user = userRepository.findByPhoneNumber(email)
             .orElseGet(() -> {
                 User newUser = new User();
-                newUser.setPhoneNumber(phoneNumber);
+                newUser.setPhoneNumber(email);
                 newUser.setIsVerified(true);
                 newUser.setName("User");
                 return userRepository.save(newUser);
             });
-        
+
         user.setIsVerified(true);
         userRepository.save(user);
-        
+
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
-        return new AuthResponse(token, user.getId().toString(), user.getName(), 
+        return new AuthResponse(token, user.getId().toString(), user.getName(),
                               user.getEmail() != null ? user.getEmail() : "", user.getRole());
     }
 }

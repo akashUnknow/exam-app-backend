@@ -1,32 +1,26 @@
 package com.examapp.auth_service.model;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.time.LocalDateTime;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "otp_tokens")
 public class OTPToken {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    private String phoneNumber;
+    private String email;
     private String otp;
     private LocalDateTime expiryTime;
     private Boolean isUsed = false;
-    
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
-    
-    public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-    
-    public String getOtp() { return otp; }
-    public void setOtp(String otp) { this.otp = otp; }
-    
-    public LocalDateTime getExpiryTime() { return expiryTime; }
-    public void setExpiryTime(LocalDateTime expiryTime) { this.expiryTime = expiryTime; }
-    
-    public Boolean getIsUsed() { return isUsed; }
-    public void setIsUsed(Boolean isUsed) { this.isUsed = isUsed; }
 }

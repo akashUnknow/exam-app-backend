@@ -4,11 +4,13 @@ server:
 spring:
   application:
     name: auth-service
+
   datasource:
     url: jdbc:postgresql://localhost:5432/exam_user_db
     username: postgres
     password: 2486
     driver-class-name: org.postgresql.Driver
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -17,8 +19,26 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 1020765082579-h99b9d3chv1fnsflo1n1dlpbt0d2fdhg.apps.googleusercontent.com
+            client-secret: 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
+            scope:
+              - email
+              - profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/google"
+        provider:
+          google:
+            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
+            token-uri: https://www.googleapis.com/oauth2/v4/token
+            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
+            user-name-attribute: sub
+
 jwt:
-  secret: exammaster-secret-key-very-long-and-secure-must-be-at-least-256-bits
+  secret: mrmlCNCptBrrf5fd+u1+BlB+fq8PSMAkd/YQNPgz77DIEciN5VzQOHOHHMejxQJ0/eT/3ZMM83+kwXibWW1uPg==
   expiration: 86400000
 
 eureka:
