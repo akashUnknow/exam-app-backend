@@ -58,7 +58,6 @@ public class AuthService {
         otpService.sendOTP(email);
     }
 
-    //verify OTP
     public AuthResponse verifyOTP(String email, String otp) {
         if (!otpService.verifyOTP(email, otp)) {
             throw new RuntimeException("Invalid or expired OTP");
