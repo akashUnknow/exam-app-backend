@@ -63,10 +63,10 @@ public class AuthService {
             throw new RuntimeException("Invalid or expired OTP");
         }
 
-        User user = userRepository.findByPhoneNumber(email)
+        User user = userRepository.findByEmail(email)
             .orElseGet(() -> {
                 User newUser = new User();
-                newUser.setPhoneNumber(email);
+                newUser.setEmail(email);
                 newUser.setIsVerified(true);
                 newUser.setName("User");
                 return userRepository.save(newUser);
