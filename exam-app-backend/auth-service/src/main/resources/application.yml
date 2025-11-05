@@ -29,13 +29,6 @@ spring:
             scope:
               - email
               - profile
-            redirect-uri: "{baseUrl}/login/oauth2/code/google"
-        provider:
-          google:
-            authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
-            token-uri: https://www.googleapis.com/oauth2/v4/token
-            user-info-uri: https://www.googleapis.com/oauth2/v3/userinfo
-            user-name-attribute: sub
 
 jwt:
   secret: mrmlCNCptBrrf5fd+u1+BlB+fq8PSMAkd/YQNPgz77DIEciN5VzQOHOHHMejxQJ0/eT/3ZMM83+kwXibWW1uPg==

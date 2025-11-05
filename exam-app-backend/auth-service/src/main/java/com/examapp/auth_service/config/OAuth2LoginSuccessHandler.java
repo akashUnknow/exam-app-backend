@@ -35,37 +35,66 @@ public class OAuth2LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHan
         String email = oAuth2User.getAttribute("email");
         String name = oAuth2User.getAttribute("name");
         String googleId = oAuth2User.getAttribute("sub");
+        Boolean emailVerified = oAuth2User.getAttribute("email_verified");
 
-        // Check if user exists
+        // Check if email is verified by Google
+        if (emailVerified == null || !emailVerified) {
+            String errorUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/login")
+                    .queryParam("error", "email_not_verified")
+                    .queryParam("message", "Email not verified by Google")
+                    .build().toUriString();
+            getRedirectStrategy().sendRedirect(request, response, errorUrl);
+            return;
+        }
+
+        // Check if user exists in database
         Optional<User> existingUser = userRepository.findByEmail(email);
 
         User user;
+        String message;
+        boolean isNewUser = false;
+
         if (existingUser.isPresent()) {
-            // User exists - login
+            // User exists - LOGIN
             user = existingUser.get();
-            System.out.println("Existing user logged in: " + email);
+
+            // Update Google ID if not set
+            if (user.getGoogleId() == null || user.getGoogleId().isEmpty()) {
+                user.setGoogleId(googleId);
+                user.setIsVerified(true);
+                user = userRepository.save(user);
+            }
+
+            message = "login_successful";
+            System.out.println("✓ LOGIN SUCCESSFUL - User: " + email);
+
         } else {
-            // New user - register
+            // New user - REGISTRATION
             user = new User();
             user.setEmail(email);
             user.setName(name);
             user.setGoogleId(googleId);
-            user.setIsVerified(true); // Google verified email
+            user.setIsVerified(true);
             user.setRole("USER");
             user = userRepository.save(user);
-            System.out.println("New user registered: " + email);
+
+            isNewUser = true;
+            message = "registration_successful";
+            System.out.println("✓ REGISTRATION SUCCESSFUL - New user created: " + email);
         }
 
         // Generate JWT token
         String token = jwtUtil.generateToken(user.getId(), user.getEmail(), user.getRole());
 
-        // Redirect to frontend with token
+        // Redirect to frontend with token and appropriate message
         String targetUrl = UriComponentsBuilder.fromUriString("http://localhost:3000/oauth/callback")
                 .queryParam("token", token)
                 .queryParam("userId", user.getId())
                 .queryParam("name", user.getName())
                 .queryParam("email", user.getEmail())
                 .queryParam("role", user.getRole())
+                .queryParam("message", message)
+                .queryParam("isNewUser", isNewUser)
                 .build().toUriString();
 
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
