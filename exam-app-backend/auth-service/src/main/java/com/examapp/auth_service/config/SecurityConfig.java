@@ -17,13 +17,11 @@ public class SecurityConfig {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
-    @Autowired
-    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .cors(cors -> cors.disable())
+        http
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> {}) // ✅ enable CORS and use your WebMvcConfigurer (WeBConfig)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/oauth2/**", "/login/oauth2/**").permitAll()
                         .anyRequest().authenticated()

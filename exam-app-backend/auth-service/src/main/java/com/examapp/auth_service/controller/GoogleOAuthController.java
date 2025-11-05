@@ -41,4 +41,8 @@ public class GoogleOAuthController {
         return principal.getAttributes();
 
     }
+    @GetMapping("/hello")
+    public String welcome() {
+        return "Welcome to the secured application!";
+    }
 }

@@ -35,4 +35,9 @@ public class AuthController {
         AuthResponse response = authService.verifyOTP(email, otp);
         return ResponseEntity.ok(response);
     }
+    @GetMapping("/hello")
+    public String welcome() {
+        return "Welcome to the secured application!";
+    }
+
 }
